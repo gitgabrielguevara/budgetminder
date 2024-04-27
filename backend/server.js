@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const dataRoutes = require("./routes/dataRoutes");
 
 require("dotenv").config();
 
@@ -9,9 +10,12 @@ const PORT = process.env.PORT || 3001;
 
 //Middleware
 
-app.use(express.json()); // to parse json
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors()); // enable CORS
+app.use(cors());
+
+// Routes
+app.use("/api/data", dataRoutes);
 
 // Connect to MondoDB
 mongoose
@@ -25,7 +29,7 @@ mongoose
   );
 
 app.get("/", (req, res) => {
-  res.send("🌏Hello World Gabe 🌍");
+  res.send("🌏Hello Gabes World🌍");
 });
 
 app.listen(PORT, () => {
