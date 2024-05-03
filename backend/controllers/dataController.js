@@ -2,11 +2,21 @@ const BudgetModel = require("../models/Data");
 
 // Controller function for CRUD operations
 exports.createData = async (req, res) => {
-  // Implementation for creating data
+  try {
+    const newData = await BudgetModel.create(req.body);
+    res.status(201).json(newData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 exports.getData = async (req, res) => {
-  // Implementation for getting data
+  try {
+    const data = await BudgetModel.find();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 exports.updateData = (req, res) => {
