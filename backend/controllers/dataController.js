@@ -1,6 +1,6 @@
 const BudgetModel = require("../models/Data");
 
-// Controller function for CRUD operations
+// Controller functions for CRUD operations
 exports.createData = async (req, res) => {
   try {
     const newData = await BudgetModel.create(req.body);
@@ -19,10 +19,33 @@ exports.getData = async (req, res) => {
   }
 };
 
-exports.updateData = (req, res) => {
-  // Implementation for updating data
+exports.updateData = async (req, res) => {
+  try {
+    console.log("Received PUT request");
+    const { id } = req.params;
+    console.log("Received _id:", id); // Log the received _id
+    const newData = req.body;
+    const updatedData = await BudgetModel.findByIdAndUpdate(id, newData, {
+      new: true,
+    });
+    if (!updatedData) {
+      return res.status(404).json({ error: "Resource not found" });
+    }
+    res.json(updatedData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
-exports.deleteData = (req, res) => {
-  // Implementation for deleting data
+exports.deleteData = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedData = await BudgetModel.findByIdAndDelete(id);
+    if (!deletedData) {
+      return res.status(404).json({ error: "Resource not found" });
+    }
+    res.json({ message: "Resource deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };

@@ -5,7 +5,7 @@ const dataController = require("../controllers/dataController");
 // Routes for testing CRUD operations
 router.post("/", dataController.createData);
 router.get("/", dataController.getData);
-router.put("/id", dataController.updateData);
-router.delete("/id", dataController.deleteData);
+router.put("/:id", dataController.updateData);
+router.delete("/:id", dataController.deleteData);
 
 module.exports = router;
